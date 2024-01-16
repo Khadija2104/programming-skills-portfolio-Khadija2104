@@ -1,0 +1,52 @@
+class VendingMachine:
+    def __init__(self):
+        self.menu={
+            
+            'drinks' : { 'pepsi': 2.50, 'water': 2.00, 'coke': 2.50},
+            'snacks' : {'salad chips': 2.50, 'Oreo': 2.00, 'gummy candy':9.90}
+        }
+
+    def display_menu(self):
+        print("Menu:")
+        for category, items in self.menu.items():
+            print(f"\n{category.capitalize()}:")
+            for item, price in items.items():
+                print(f"{item.capitalize()}: AED {price:.2f}")
+
+    def select_category(self):
+        while True:
+            category = input("\nSelect a category (drinks/snacks):").lower()
+            if category in self.menu:
+                return category
+            else:
+                print("Invaild category. Please choose drinks or snacks.")
+
+    def select_item(self, category):
+        while True:
+            item = input(f"\nSelect a {category} item:").lower()
+            if item in self.menu[category]:
+                return item
+            else:
+                print("Invaild item. Please choose a valid item from the menu.")
+
+    def process_transaction(self, item, category, money):
+        price = self.menu[category][item]
+        if money >= price:
+            change = money - price
+            print(f"\nTransaction successful! Enjoy your {item.capitalize()}!")
+            print(f"change: AED{change:.2f}")
+        else:
+            print("Insufficient funds. Please insert more money.")    
+    
+    def operate_vending_machine(self):
+        self.display_menu()
+        category = self.select_category()
+        item = self.select_item(category)
+        money = float(input("\nTotal how much money do you have? AED"))
+
+        self.process_transaction(item, category, money)
+
+if __name__ == "__main__":
+    vending_machine = VendingMachine()
+    vending_machine.operate_vending_machine()
+
